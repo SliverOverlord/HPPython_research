@@ -1,6 +1,0 @@
-Today we worked on implementing a split function and a print function within an mpi program to split a matrix, and send the two halves to
-separate clients. 
-The client machines will receive segments of the original matrix sent from the master via MPI_Send.
-Using MPI_Recv the segments will be read into the client machine and printed using the programs printMatrix function. 
-This will illustrate implementation of single program multiple data using mpi.
-I encountered several errors involving the free() function. 
