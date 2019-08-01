@@ -1,0 +1,20 @@
+
+To install mpi4py enter the below command
+    sudo apt-get install python
+
+Next
+    sudo apt-get install python-mpi4py
+    
+Make a directory 
+    mkdir name
+    
+Create a machine file witht the ip addresses of master and client nodes
+
+Install numpy
+    sudo apt-get install numpy
+
+Create your program file
+
+Run the program using:
+
+mpirun.openmpi -np 2 -machinefile /home/mpi/mpi4py/machinefile python name.py
