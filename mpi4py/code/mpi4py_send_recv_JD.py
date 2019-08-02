@@ -8,27 +8,30 @@ from mpi4py import MPI
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
-row = 4
-col = 4
-recData = [0,0,0,0]
 
 def main():
     #the master does its stuff first
     if rank == 0:
-        #
-        sendData = 2
-        comm.send(sendData, dest = 1, tag = 13)
+        #make an object
+        data = "Test Data"
         
+        #send the object
+        comm.send(data, dest = 1, tag = 11)
+        
+        #print the object that was sent
         print("\n")
-        print("Data from processor ", rank, ": ", sendData)
+        print("Data from processor "+ str(rank) + ": ", data)
         print("\n")
+        
     #the clients now do their part
-    else:
+    elif rank == 1:
         
-        comm.recv(recData, source = 0, tag = 13)
+        #Receive the object
+        data = comm.recv(source = 0, tag = 11)
 
+        #print the object received
         print("\n")
-        print("Data from processor ", rank, ": ", recData)
+        print("Data from processor "+ str(rank) + ": ", data)
         print("\n")
         
 if __name__ == "__main__":
