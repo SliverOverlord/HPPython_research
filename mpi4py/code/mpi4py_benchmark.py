@@ -41,6 +41,17 @@ def main():
 
 def makeData(fileName):
     #code to populate a txtfile with random numbers
+    f = open(fileName, "w")
+    
+    #counter
+    count = 0
+    numCounter = 0
+    lines = 0
+    
+    while count < 100*100:
+        if numCounter = 99:
+            numCounter = 0
+    
     print(fileName, " created\n");
     
 def multiplyMatrixNumpy(matrix1, matrix2):
@@ -53,12 +64,13 @@ def multiplyMatrixNumpy(matrix1, matrix2):
     
 def multiplyMatrixList(matrix1, matrix2):
     #set result matrix to empty
-    result = [[] for x in range xrange(0,100)
+    result = [[] for x in range xrange(0,100)]
     
     for i in range(len(matrix1):
         for j in range(len(matrix2[0])):
             for k in range(len(matrix2)):
                 result[i][j] += matrix1[i][k] * matrix2[k][j]
+
                 
 
 if __name__ == "__main__":
