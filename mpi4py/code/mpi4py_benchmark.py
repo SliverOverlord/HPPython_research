@@ -19,21 +19,31 @@ def main():
     matrix1 = numpy.empty(10000, dtype = numpy.int64)
     matrix2 = numpy.empty(10000, dtype = numpy.int64)
     
+    matrixList1 = [[] for x in range xrange(0,100)]
+    matrixList2 = [[] for x in range xrange(0,100)]
+    
     row = 100
     col = 100
     
     #the master does its work first
     if rank == 0:
-        #call makeData to make data1.txt and data2.txt
+        try:
+            #open textfiles
+            
+            #import data from data1.txt
+            #save to matrix1
         
-        #-makeData("data1.txt")
-        #-makeData("data2.txt")
+            #import data from data2.txt
+            #save to matrix2
         
-        #import data from data1.txt
-        #save to matrix1
+        except:
         
-        #import data from data2.txt
-        #save to matrix2
+            #call makeData to make data1.txt and data2.txt
+        
+            makeData("data1.txt")
+            makeData("data2.txt")
+        
+        
 
         #format array to matrix 100x100
         matrix1 = recData.reshape(100,100)
@@ -51,6 +61,9 @@ def makeData(fileName):
     while count < 100*100:
         if numCounter = 99:
             numCounter = 0
+            f.write("\n")
+        
+        
     
     print(fileName, " created\n");
     
