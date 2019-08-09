@@ -3,6 +3,8 @@
 #Description: This program benchmarks numpy matrix
 #   multiplication vs standard python
 
+#Progress: in progress
+
 from mpi4py import MPI
 import random
 import numpy
@@ -20,7 +22,8 @@ def main():
     matrix1 = numpy.empty(10000, dtype = numpy.int64)
     matrix2 = numpy.empty(10000, dtype = numpy.int64)
     
-    matrixList1 = [[] for x in range(0,100)]
+    #matrixList1 = [[] for x in range(0,100)]
+    matrixList1 = [[0 for col in range(100)] for rows in range(100)]
     matrixList2 = [[] for x in range(0,100)]
     
     row = 100
@@ -28,6 +31,12 @@ def main():
     
     #the master does its work first
     if rank == 0:
+        
+        #format array to matrix 100x100
+        matrix1 = matrix1.reshape(100,100)
+        matrix2 = matrix2.reshape(100,100)
+        
+        openFile("data1.txt")
         try:
             #try to open the files
             openFile("data1.txt")
@@ -39,31 +48,47 @@ def main():
         
             makeData("data1.txt")
             makeData("data2.txt")
-        
-        
 
-        #format array to matrix 100x100
-        matrix1 = matrix1.reshape(100,100)
-        matrix2 = matrix2.reshape(100,100)
+        
+        
+        print(matrix1,"\n")
+        print(matrix2, "\n")
+        print(matrixList1, "\n")
         
 def openFile(fileName):
     #open textfiles
-    f1 = open(data1.txt, 'r')
+    f1 = open(fileName, 'r')
         
     #import data from data2.txt
     #save to matrix2
 
     rowCount = 0
     colCount = 0
+    
+    if fileName == "data1.txt":
+    
+        #import data from data1.txt
+        for line in f1.readlines():
+            #split on ,
+            for i in line.split(","):
+                #insert value into the matrix
+                matrixList1[rowCount][colCount] = i
+                matrix1[rowCount,colCount] = i
             
-    #import data from data1.txt
-    for line in f1.readlines():
-        #split on ,
-        for i in line.split(","):
-            #insert value into the matrix
-            matrixList1[rowCount][colCount] = i
-            colCount += 1
-            rowCount +=1
+                colCount += 1
+                rowCount +=1
+    else:
+        print("making two")
+        #import data from data2.txt
+        for line in f1.readlines():
+            #split on ,
+            for i in line.split(","):
+                #insert value into the matrix
+                matrixList2[rowCount][colCount] = i
+                matrix2[rowCount,colCount] = i
+            
+                colCount += 1
+                rowCount +=1
     f1.close()
 
 def makeData(fileName):
