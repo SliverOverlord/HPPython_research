@@ -44,7 +44,7 @@ int main(){
     }
     inFile2.close();
     /*
-    for (i = 0; i < 100**100; i++){
+    for (int i = 0; i < 100**100; i++){
         mat_mult(list_mat, list_mat2, output_mat);
     }
     */
