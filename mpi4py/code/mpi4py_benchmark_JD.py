@@ -78,9 +78,9 @@ def main():
         print("I recommend a small number less than 50: ")
         iteration_count = int(input())
         print("*"*80)
-        print("Custom Mat_Multiplication {} times (list):".format(iteration_count), list_timer.timeit(number=iteration_count))
-        print("Custom Mat_Multiplication {} times (ndarray):".format(iteration_count), ndarray_timer.timeit(number=iteration_count))
-        print("Numpy Built-in Mat_Multiplication {} times (array):".format(iteration_count), built_in_mult_timer.timeit(number=iteration_count))
+        print('Custom Mat_Multiplication {} times (list):'.format(iteration_count), list_timer.timeit(number=iteration_count))
+        print('Custom Mat_Multiplication {} times (ndarray):'.format(iteration_count), ndarray_timer.timeit(number=iteration_count))
+        print('Numpy Built-in Mat_Multiplication {} times (array):'.format(iteration_count), built_in_mult_timer.timeit(number=iteration_count))
 
 
 def mat_mult(mat1, mat2, output_mat):
