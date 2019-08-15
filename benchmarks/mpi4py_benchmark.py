@@ -1,4 +1,4 @@
-#Author: Heecheon Park, Joshua DeNio
+#Author: Heecheon Park
 #Date: 8/11/2019
 """
 #Description: This program benchmarks numpy matrix
