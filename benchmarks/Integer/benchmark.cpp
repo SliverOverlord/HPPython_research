@@ -41,7 +41,7 @@ int main(){
         for (int i = 0; i < rowCount; i++){
             //
             for (int j =0; j < colCount; j++){
-                inFile2 >> list_mat[i][j];
+                inFile2 >> list_mat2[i][j];
             }
         }
     }
