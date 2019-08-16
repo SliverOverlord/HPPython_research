@@ -1,6 +1,6 @@
 """
 Name: Heecheon Park
-Description: EgMandelbrot.java in C version
+Description: EgMandelbrot.java in Python version
 """
 
 import numpy as np
