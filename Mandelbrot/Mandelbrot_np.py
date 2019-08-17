@@ -11,9 +11,11 @@ def main():
     N = 38;
     CUTOFF = 100;
 
-    char_set = [[None for i in range(N)] for j in range(N)]
+    #char_set = np.chararray((N, N), unicode=True, order='C')
+    char_set = np.chararray((N, N), unicode=True)
+    char_set[:] = None
 
-    listStore_startTime = time.time()
+    ndarrayStore_startTime = time.time()
     for i in range(N):
         for j in range(N):
             cr = (4.0 * i - 2 * N) / N
@@ -41,20 +43,20 @@ def main():
                 zr = newr
                 zi = newi
 
-    listStore_endTime = time.time()
+    ndarrayStore_endTime = time.time()
 
     print(N) 
 
-    listAccess_startTime = time.time()
+    ndarrayAccess_startTime = time.time()
     for i in range(N):
         for j in range(N):
             print(char_set[i][j], end=" ")
             if j == (N-1):
                 print()
-    listAccess_endTime = time.time()
+    ndarrayAccess_endTime = time.time()
 
-    print("list store time: %s seconds" % (listStore_endTime - listStore_startTime)) 
-    print("list access time: %s seconds" % (listAccess_endTime - listAccess_startTime)) 
+    print("Ndarray store time: %s seconds" % (ndarrayStore_endTime - ndarrayStore_startTime)) 
+    print("list access time: %s seconds" % (ndarrayAccess_endTime - ndarrayAccess_startTime)) 
 
 if __name__ == "__main__":
     main()
