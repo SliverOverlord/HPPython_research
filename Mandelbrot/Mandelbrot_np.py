@@ -4,16 +4,23 @@ Description: EgMandelbrot.java in Python version
 """
 
 import numpy as np
+import sys
 import time
 
 def main():
     
-    N = 38;
-    CUTOFF = 100;
+    N = 100;
+    #N = 38
+    CUTOFF = 100
 
     #char_set = np.chararray((N, N), unicode=True, order='C')
     char_set = np.chararray((N, N), unicode=True)
+    #char_set = np.array(dtype=string)
+    #char_set = np.zeros((38,38))
+
     char_set[:] = None
+    np.set_printoptions(threshold=sys.maxsize)
+    print(char_set)
 
     ndarrayStore_startTime = time.time()
     for i in range(N):

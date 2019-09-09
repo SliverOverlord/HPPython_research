@@ -28,17 +28,18 @@ import sys
 from array import array
 #from timeit import timeit
 from timeit import Timer
+from numba import jit
 
 def main():
     
     list_mat = []
     list_mat2 = []
-    np_mat = np.zeros((1000,1000), dtype=np.int64)
-    np_mat2 = np.zeros((1000,1000), dtype=np.int64)
+    #np_mat = np.zeros((1000,1000), dtype=np.int64)
+    #np_mat2 = np.zeros((1000,1000), dtype=np.int64)
     #np_mat_float = np.zeros((1000,1000), dtype=np.float32)
     #np_mat_float2 = np.zeros((1000, 1000), dtype=np.float32)
-    np_mat_double = np.zeros((1000,1000), dtype=np.float64)
-    np_mat_double2 = np.zeros((1000, 1000), dtype=np.float64)
+    #np_mat_double = np.zeros((1000,1000), dtype=np.float64)
+    #np_mat_double2 = np.zeros((1000, 1000), dtype=np.float64)
     #np_mat_longdouble = np.zeros((1000,1000), dtype=np.longdouble)
     #np_mat_longdouble2 = np.zeros((1000, 1000), dtype=np.longdouble)
 
@@ -54,9 +55,9 @@ def main():
 
     # Initializing 1000x1000 list_matrix of zeros
     list_output = [[int(0) for col in range(1000)] for rows in range(1000)]
-    np_output = np.zeros((1000,1000), dtype=np.int64)
+    #np_output = np.zeros((1000,1000), dtype=np.int64)
     #np_output_float = np.zeros((1000,1000), dtype=np.float32)
-    np_output_double = np.zeros((1000,1000), dtype=np.float64)
+    #np_output_double = np.zeros((1000,1000), dtype=np.float64)
     #np_output_longdouble = np.zeros((1000,1000), dtype=np.longdouble)
     #np_output_float96 = np.zeros((1000,1000), dtype=np.float96)
     #np_output_float128 = np.zeros((1000,1000), dtype=np.float128)
@@ -96,12 +97,12 @@ def main():
     # New Discovery!!
     # dtype could be "dtype=int". but int is 32-bit based. So if an element gets too large,
     # it will become a negative integer.
-    np_mat = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.int64)
-    np_mat2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.int64)
+    #np_mat = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.int64)
+    #np_mat2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.int64)
     #np_mat_float = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float32)
     #np_mat_float2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float32)
-    np_mat_double = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float64)
-    np_mat_double2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float64)
+    #np_mat_double = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float64)
+    #np_mat_double2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float64)
     #np_mat_longdouble = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.longdouble)
     #np_mat_longdouble2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.longdouble)
     #np_mat_float96 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float96)
@@ -138,36 +139,40 @@ def main():
         However, using lambda can make the function parameter with arguments callable.
     """
     print("Calculation begins here.....")
-    #mat_mult(list_mat, list_mat2, list_output)
+    mat_mult(list_mat, list_mat2, list_output)
     #mat_mult(np_mat, np_mat2, np_output)
     #mat_mult(np_mat_float, np_mat_float2, np_output_float)
     #mat_mult(np_mat_double, np_mat_double2, np_output_double)
+    #start_time = time.time()
+    #numba_mat_mult(np_mat_double, np_mat_double2, np_output_double)
+    #end_time = time.time()
+    #print(np_output_double[0][0], ',', np_output_double[999][999])
+    #print("numba_mat_mult (double) took {} seconds.".format(end_time - start_time))
     #mat_mult(np_mat_longdouble, np_mat_longdouble2, np_output_longdouble)
     #mat_mult(np_mat_float96, np_mat_float96_2, np_output_float96)
     #mat_mult(np_mat_float128, np_mat_float128_2, np_output_float128)
 
-    start_time = time.time()
-    np.matmul(np_mat, np_mat2, np_output)
-    end_time = time.time()
-    print("np.matmul (int64) took {} seconds.".format(end_time - start_time))
+    #start_time = time.time()
+    #np.matmul(np_mat, np_mat2, np_output)
+    #end_time = time.time()
+    #print("np.matmul (int64) took {} seconds.".format(end_time - start_time))
 
     #start_time = time.time()
     #np.matmul(np_mat_float, np_mat_float2, np_output_float)
     #end_time = time.time()
     #print("np.matmul (float) took {} seconds.".format(end_time - start_time))
 
-    start_time = time.time()
-    np.matmul(np_mat_double, np_mat_double2, np_output_double)
-    end_time = time.time()
-    print("np.matmul (double) took {} seconds.".format(end_time - start_time))
+    #start_time = time.time()
+    #np.matmul(np_mat_double, np_mat_double2, np_output_double)
+    #end_time = time.time()
+    #print("np.matmul (double) took {} seconds.".format(end_time - start_time))
 
     #start_time = time.time()
     #np.matmul(np_mat_longdouble, np_mat_longdouble2, np_output_longdouble)
     #end_time = time.time()
     #print("np.matmul (longdouble) took {} seconds.".format(end_time - start_time))
 
-    print(np_output)
-    print(np_output_double)
+    #print(np_output_double)
 
 def mat_mult(mat1, mat2, output_mat):
     
@@ -185,6 +190,17 @@ def mat_mult(mat1, mat2, output_mat):
     return output_mat
 
 
+@jit(nopython=True)
+def numba_mat_mult(mat1, mat2, output_mat):
+    
+    row = len(mat1)
+    col = len(mat1[0])
+    for r in range(0, row):
+        for c in range(0, col):
+            for r_iter in range(0, row):                
+                output_mat[r][c] += mat1[r][r_iter] * mat2[r_iter][c] 
+    
+    return output_mat
 
 if __name__ == "__main__":
     main()

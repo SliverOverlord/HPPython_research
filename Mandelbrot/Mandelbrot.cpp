@@ -11,6 +11,7 @@ using namespace std;
 
 int main()
 {
+    //int N = 100;
     int N = 38;
     int CUTOFF = 100;
 

@@ -10,7 +10,7 @@ Description: EgMandelbrot.java in C version
 int main()
 {
     int N = 38;
-    //int N = 50;
+    //int N = 100;
     int CUTOFF = 100;
 
     char set[N][N];

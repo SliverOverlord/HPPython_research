@@ -8,11 +8,12 @@ import time
 
 def main():
     
-    N = 38;
+    N = 100;
     CUTOFF = 100;
 
     char_set = [[None for i in range(N)] for j in range(N)]
 
+    print(char_set)
     listStore_startTime = time.time()
     for i in range(N):
         for j in range(N):

@@ -22,6 +22,7 @@ I created a matrix multiplication function that takes 2 array-like containers an
 The function calculate and append the result to output array.
 """
 import numpy as np
+from numba import jit
 import time
 import sys
 
@@ -79,8 +80,8 @@ def main():
             int_string_list = line.split()
 
             # Convert the string element to int or float
-            #int_list = [int(i) for i in int_string_list]
-            float_list = [float(i) for i in int_string_list]
+            int_list = [int(i) for i in int_string_list]
+            #float_list = [float(i) for i in int_string_list]
 
             # Append the int_list to list_mat and list_mat2
             list_mat.append(int_list)
@@ -140,6 +141,7 @@ def main():
     print("Calculation begins here.....")
     mat_mult(list_mat, list_mat2, list_output)
     mat_mult(np_mat, np_mat2, np_output)
+    numba_mat_mult(np_mat, np_mat2, np_output)
     #mat_mult(np_mat_float, np_mat_float2, np_output_float)
     #mat_mult(np_mat_double, np_mat_double2, np_output_double)
     #mat_mult(np_mat_longdouble, np_mat_longdouble2, np_output_longdouble)
@@ -183,7 +185,21 @@ def mat_mult(mat1, mat2, output_mat):
 
     return output_mat
 
+@jit
+def numba_mat_mult(mat1, mat2, output_mat):
+    
+    row = len(mat1)
+    col = len(mat1[0])
+    start_time = time.time()
+    for r in range(0, row):
+        for c in range(0, col):
+            for r_iter in range(0, row):                
+                output_mat[r][c] += mat1[r][r_iter] * mat2[r_iter][c] 
+    
+    end_time = time.time()
+    print(type(output_mat[0][0]), "took","--- %s seconds ---" % (end_time - start_time))
 
+    return output_mat
 
 if __name__ == "__main__":
     main()
