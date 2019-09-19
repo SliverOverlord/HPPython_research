@@ -1,9 +1,9 @@
 def main():
 
-    with open("100x100_matrix.txt", "w") as f:
+    with open("10x10_matrix.txt", "w") as f:
         
-        for i in range(1, 10001):
-            if i % 100 == 0:
+        for i in range(1, 101):
+            if i % 10 == 0:
                 f.write(str(i) + "\n")
             else:
                 f.write(str(i) + " ")

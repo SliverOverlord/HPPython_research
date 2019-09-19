@@ -68,7 +68,10 @@ def main():
     time.sleep(1)
     print("***********************************************")
 
+    startTime = MPI.Wtime()
     mat_mult(local_np_mat, np_mat2, local_output_mat)
+    endTime = MPI.Wtime()
+    print("Time taken:", endTime - startTime, "seconds.")
 
     #COMM.Gather(local_np_mat, np_mat_gathered, root=MASTER)
     COMM.Gather(local_output_mat, np_mat_gathered, root=MASTER)

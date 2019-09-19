@@ -1,16 +1,3 @@
-"""
-Name: Heecheon Park
-Date: September 6th 2019
-Minnesota State University Moorhead
-
-Running 1000x1000 matrix multiplication with numpy and mpi
-with 5 processors.
-
-
-Execution Method:
-
-mpiexec -np 5 python3 np_scatter_and_gather.py
-"""
 from mpi4py import MPI
 import numpy as np
 import sys
@@ -24,37 +11,30 @@ def main():
     RANK = COMM.Get_rank()
     SIZE = COMM.Get_size()
 
-    row_split = 1000 / SIZE
+    row_split = 10 / SIZE
 
-    assert((1000 % row_split) == 0), "Row must be divisible by row_split!"
+    assert((10 % row_split) == 0), "Row must be divisible by row_split!"
     row_split = int(row_split)
+    if (SIZE % 2) != 0:
+        row_split += 1
+        print("row_split:", row_split)
     #np.set_printoptions(threshold=sys.maxsize)
             
-    np_mat = np.zeros((1000,1000), dtype=np.float64)
-    np_mat2 = np.zeros((1000,1000), dtype=np.float64)
-    local_np_mat = np.zeros((row_split,1000), dtype=np.float64) #container to receive data
-    local_output_mat = np.zeros((row_split,1000), dtype=np.float64) #container to receive data
-    #local_np_mat2 = np.zeros((1000,1000), dtype=np.float64) #container to receive data
-    np_mat_gathered = np.zeros((1000,1000), dtype=np.float64) #container to gather data
+    np_mat = np.zeros((10,10), dtype=np.float64)
+    np_mat2 = np.zeros((10,10), dtype=np.float64)
+    local_np_mat = np.zeros((row_split,10), dtype=np.float64) #container to receive data
+    local_output_mat = np.zeros((row_split,10), dtype=np.float64) #container to receive data
+    #local_np_mat2 = np.zeros((10,10), dtype=np.float64) #container to receive data
+    np_mat_gathered = np.zeros((10,10), dtype=np.float64) #container to gather data
 
-    np_mat = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float64)
-    np_mat2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.float64)
-
-    #np_mat = np.zeros((1000,1000), dtype=np.int64)
-    #np_mat2 = np.zeros((1000,1000), dtype=np.int64)
-    #local_np_mat = np.zeros((2,1000), dtype=np.int64) #container to receive data
-    #np_mat_gathered = np.zeros((1000,1000), dtype=np.int64) #container to gather data
-
-    #np_mat = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.int64)
-    #np_mat2 = np.loadtxt("1000x1000_matrix.txt", usecols=range(0, 1000), dtype=np.int64)
+    np_mat = np.loadtxt("10x10_matrix.txt", usecols=range(0, 10), dtype=np.float64)
+    np_mat2 = np.loadtxt("10x10_matrix.txt", usecols=range(0, 10), dtype=np.float64)
 
     if (RANK == MASTER): 
         print("Initial np_matrix at processor at: {}".format(RANK))
         print(np_mat)
         print("Scattering the np_matrix to all processor from {}".format(MASTER))
     #COMM.Scatter(sendbuf, recvbuf, root) is
-    #COMM.Scatter([np_mat (data), 8 (count), MPI.INT (datatype)], [local_np_mat, 8, MPI.INT], root=MASTER)
-    #COMM.Scatter([np_mat, 8, MPI.INT], local_np_mat, root=MASTER)
     COMM.Scatter(np_mat, local_np_mat, root=MASTER)
     COMM.Bcast(np_mat2, MASTER)
     COMM.Barrier()
