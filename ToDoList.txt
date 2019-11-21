@@ -1,0 +1,17 @@
+To do list
+
+1. Benchmark: 
+    Sequential (Python(numpy / numba), Java, C, Python(list), Python(list/numba))
+    Parallel (mpi4py (numpy / numba), Java (OpenMPI), C (MPICH))
+    
+    We would like to compare the results of all the benchmarks including numpy's matmul function
+    and that of openMPI and MPICH.
+
+    Make 2 versions of matrix multiplication in C (1d and 2d)
+    
+    
+
+2. Find disadvantages of using mpi4py, numpy, and numba. (Numpy array access makes program slow)
+    It should be mentioned in the introduction of our paper.
+    
+3.

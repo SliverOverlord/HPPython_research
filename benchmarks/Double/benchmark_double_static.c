@@ -42,6 +42,14 @@ int main(){
     
     printf("output_mat (truncated) \n");
     printf("%lf\n", output_mat[0][0]);
+    printf("%lf\n", output_mat[0][1]);
+    printf("%lf\n", output_mat[0][2]);
+    printf("%lf\n", output_mat[0][3]);
+    printf("%lf\n", output_mat[0][4]);
+    printf("%lf\n", output_mat[999][995]);
+    printf("%lf\n", output_mat[999][996]);
+    printf("%lf\n", output_mat[999][997]);
+    printf("%lf\n", output_mat[999][998]);
     printf("%lf\n", output_mat[999][999]);
 
     return 0;
