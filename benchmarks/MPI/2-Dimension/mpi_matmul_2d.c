@@ -52,9 +52,9 @@ int main(int argc, char* argv[])
 
     numworkers = world_size - 1;
     //static double local_mat[row_split][1000];
-    static double *local_mat;
-    static double *local_output_mat;
-    static double gathered_output_mat[1000000];
+    //static double *local_mat;
+    //static double *local_output_mat;
+    //static double gathered_output_mat[1000000];
 
     FILE *fp, *fp2;
     if (world_rank == MASTER)
