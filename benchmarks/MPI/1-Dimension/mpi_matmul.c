@@ -20,6 +20,7 @@ If the row is 1000, then you should not use 3, 6, 7, or so forth as a number of 
 
 #define MASTER 0
 
+void printMat ( double mat[1000][1000], int row, int col );
 void print_1d_mat(double* mat, int row, int col);
 void mat_mult_double_1d(double* mat1, int mat1_row, int mat1_col,
                         double mat2[], int mat2_row, int mat2_col,
@@ -44,6 +45,7 @@ int main(int argc, char* argv[])
 
     int offset = 1000000 / world_size;
     int local_row = 1000 / world_size;
+    double startTime, endTime;
 
     FILE *fp, *fp2;
     if (world_rank == MASTER)
@@ -72,6 +74,8 @@ int main(int argc, char* argv[])
     local_mat = (double *) malloc(sizeof(double) * offset);
     local_output_mat = (double *) malloc(sizeof(double) * offset);
     
+    
+    startTime = MPI_Wtime();
 	MPI_Scatter(mat, offset, MPI_DOUBLE, local_mat, offset, MPI_DOUBLE, MASTER, MPI_COMM_WORLD);
 	MPI_Bcast(mat2, 1000000, MPI_DOUBLE, MASTER, MPI_COMM_WORLD);
 
@@ -85,17 +89,31 @@ int main(int argc, char* argv[])
     MPI_Gather(local_output_mat, local_row * 1000, MPI_DOUBLE, 
                gathered_output_mat, local_row * 1000, MPI_DOUBLE, 
                MASTER, MPI_COMM_WORLD);
+    endTime = MPI_Wtime();
 
     if (world_rank == MASTER)
+    {
         print_1d_mat(gathered_output_mat, 1000, 1000);
-    
+        printf("Time measured: %1.2lf\n", endTime - startTime);
+        fflush(stdout);
+    }
     free(local_mat);
-    free(output_local_mat);
+    free(local_output_mat);
 
 	MPI_Finalize();
 }
 
 
+void printMat(double mat[1000][1000], int row, int col)
+{
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < row; j++)
+            printf("%.2f ", mat[i][j]);
+        printf("\n");
+    
+    }
+}
 
 void print_1d_mat(double* mat, int row, int col)
 {
