@@ -50,7 +50,19 @@ public class Benchmark_double_1d {
         //mat_mult_double(mat_double, mat_double2, mat_double_output);
         //System.out.println("mat_double_output (truncated)\n" + mat_double_output[0][0] + "\n" + mat_double_output[999][999]);
         mat_mult_double_1d(mat_double, 1000, 1000, mat_double2, 1000, 1000, mat_double_output, 1000, 1000);
-        System.out.println("mat_double_output (truncated)\n" + mat_double_output[0] + "\n" + mat_double_output[arrSize-1]);
+
+        System.out.println("mat_double_output (truncated)");
+        System.out.println(mat_double_output[0]);
+        System.out.println(mat_double_output[1]);
+        System.out.println(mat_double_output[2]);
+        System.out.println(mat_double_output[3]);
+        System.out.println(mat_double_output[4]);
+        System.out.println(mat_double_output[arrSize-5]);
+        System.out.println(mat_double_output[arrSize-4]);
+        System.out.println(mat_double_output[arrSize-3]);
+        System.out.println(mat_double_output[arrSize-2]);
+        System.out.println(mat_double_output[arrSize-1]);
+
 
         //for (int i = 0; i < 100; i++)
         //{
@@ -85,7 +97,7 @@ public class Benchmark_double_1d {
         for (int i = 0; i < mat1_row; i++)
             for (int j = 0; j < mat2_col; j++)
             {
-                double sum = 0.0;
+                double sum = 0.0d;
                 for (int k = 0; k < mat2_row; k++)
                     sum = sum + mat1[i * mat1_col + k] * mat2[k * mat2_col + j];
                 output_mat[i * output_mat_col + j] = sum;

@@ -76,7 +76,17 @@ public class Benchmark_double {
         }
 
         mat_mult_double(mat_double, mat_double2, mat_double_output);
-        System.out.println("mat_double_output (truncated)\n" + mat_double_output[0][0] + "\n" + mat_double_output[999][999]);
+        System.out.println("mat_double_output (truncated)");
+        System.out.println(mat_double_output[0][0]);
+        System.out.println(mat_double_output[0][1]);
+        System.out.println(mat_double_output[0][2]);
+        System.out.println(mat_double_output[0][3]);
+        System.out.println(mat_double_output[0][4]);
+        System.out.println(mat_double_output[999][995]);
+        System.out.println(mat_double_output[999][996]);
+        System.out.println(mat_double_output[999][997]);
+        System.out.println(mat_double_output[999][998]);
+        System.out.println(mat_double_output[999][999]);
 
         //for (int i = 0; i < 100; i++)
         //{
