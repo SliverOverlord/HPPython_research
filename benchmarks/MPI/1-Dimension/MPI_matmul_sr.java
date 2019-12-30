@@ -96,9 +96,19 @@ class MPI_matmul_sr {
                                local_mat2, 1000, 1000,
                                local_output_mat, col_split, 1000);
 
-            print_1d_mat(local_output_mat, col_split, 1000);
+            MPI.COMM_WORLD.send(local_output_mat, chunkSize, MPI.DOUBLE, MASTER, 3);
+            //print_1d_mat(local_output_mat, col_split, 1000);
         }
         endTime = MPI.wtime();
+
+        if (world_rank == MASTER)
+        {
+            for (int process = 1; process < world_size; process++)
+            {
+                MPI.COMM_WORLD.recv(slice(gathered_output_mat, (process - 1) * chunkSize), chunkSize, MPI.DOUBLE, process, 3);
+            }
+            print_1d_mat(gathered_output_mat, col_split, 1000);
+        }
 
         MPI.Finalize();
         System.out.println("Time measured: " + (endTime - startTime));
