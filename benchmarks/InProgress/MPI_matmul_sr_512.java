@@ -49,13 +49,13 @@ class MPI_matmul_sr_512 {
         {
             try
             {
-                Scanner sc = new Scanner(new BufferedReader(new FileReader("1000x1000_matrix.txt")));
+                Scanner sc = new Scanner(new BufferedReader(new FileReader("512x512_matrix.txt")));
                 while(sc.hasNextLine()) {
-                    for (int i=0; i<1000; i++) {
+                    for (int i=0; i<512; i++) {
                         String[] line = sc.nextLine().trim().split(" ");
                         for (int j=0; j<line.length; j++) {
-                            mat[i*1000+j] = Double.parseDouble(line[j]);
-                            mat2[i*1000+j] = Double.parseDouble(line[j]);
+                            mat[i*512+j] = Double.parseDouble(line[j]);
+                            mat2[i*512+j] = Double.parseDouble(line[j]);
                         }
                     }
                 }
@@ -107,7 +107,7 @@ class MPI_matmul_sr_512 {
             {
                 MPI.COMM_WORLD.recv(slice(gathered_output_mat, (process - 1) * chunkSize), chunkSize, MPI.DOUBLE, process, 3);
             }
-            //print_1d_mat(gathered_output_mat, 512, 512);
+            print_1d_mat(gathered_output_mat, 512, 512);
         }
 
         MPI.Finalize();
