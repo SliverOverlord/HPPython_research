@@ -129,12 +129,12 @@ int main(int argc, char* argv[])
     {
         //for (int process = 1; process < world_size; process++)
         //{
-        //  //MPI_Recv(&gathered_output_mat, 1000000, MPI_DOUBLE, process, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        //  //MPI_Recv(&gathered_output_mat, 262144, MPI_DOUBLE, process, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         //  printf("receiving: %lf\n", local_output_mat[(process-1) * chunkSize]);
         //  MPI_Recv(&gathered_output_mat[(process-1) * chunkSize], chunkSize, MPI_DOUBLE, process, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         //}
         //MPI_Barrier(MPI_COMM_WORLD);
-        //print_1d_mat(gathered_output_mat, 1000, 1000);
+        //print_1d_mat(gathered_output_mat, 512, 512);
         //printf("Time measured: %3.9lf\n", endTime - startTime);
         fflush(stdout);
     }
