@@ -1,7 +1,11 @@
 """
 Author: Heecheon Park
 
-Description: Python program to call matmul function from C program. (Experimental)
+Description: 
+
+1. Python program to call matmul function from C program. (Experimental)
+2. Wrapping Python into MPICH.
+
 
 Disclaimer:
 
@@ -20,6 +24,10 @@ _c_pylib = C.CDLL("c_pylib.so")
 _c_pylib.matmul.argtypes = (C.POINTER(C.c_double), C.c_int, C.c_int, \
                     C.POINTER(C.c_double), C.c_int, C.c_int, \
                     C.POINTER(C.c_double), C.c_int, C.c_int)
+
+_c_pylib.mpi_send.argtypes = (C.c_void_p, C.c_int, C.c_int, C.c_int)
+_c_pylib.mpi_recv.argtypes = (C.c_void_p, C.c_int, C.c_int, C.c_int)
+
 
 def main():
     
@@ -43,6 +51,44 @@ def main():
             print(result[i])
         else:
             print(result[i], end=" ")
+
+    #global _c_pylib
+    #_c_pylib.hello_mpi()
+
+    sendMsg = [1.0, 2.0, 3.0]
+    recvMsg = [0.0, 0.0, 0.0]
+    mpi_send(sendMsg, len(sendMsg), 1, 1)
+    mpi_recv(recvMsg, len(sendMsg), 0, 1)
+    print("Received message:", recvMsg)
+
+def mpi_send(data, count, destination, tag):
+    global _c_pylib
+
+    parsedData = (C.c_double * len(data))(*data)
+
+    """
+    Encode string into byte object.
+    Then, convert it into string buffer that can be decayed into
+    char pointer.
+    """
+    #parsedData = data.encode("utf-8")
+    #parsedData = C.create_string_buffer(parsedData)
+
+    _c_pylib.mpi_send(parsedData, len(data), destination, tag)
+
+def mpi_recv(data, count, source, tag):
+    global _c_pylib
+    parsedData = (C.c_double * len(data))(*data)
+
+    """
+    Encode string into byte object.
+    Then, convert it into string buffer that can be decayed into
+    char pointer.
+    """
+    #parsedData = data.encode("utf-8")
+    #parsedData = C.create_string_buffer(parsedData)
+
+    _c_pylib.mpi_recv(parsedData, len(data), source, tag)
 
 def matmul(matA, rowA, colA,\
            matB, rowB, colB,\

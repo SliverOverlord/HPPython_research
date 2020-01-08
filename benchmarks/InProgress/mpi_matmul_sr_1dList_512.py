@@ -2,14 +2,6 @@
 Name: Heecheon Park
 Date: September 6th 2019
 Minnesota State University Moorhead
-
-Running 1000x1000 matrix multiplication with list and mpi
-with 5 processors.
-
-
-Execution Method:
-
-mpiexec -np 5 python3 mpi_list_matmult.py
 """
 from mpi4py import MPI
 from numba import njit, jit
