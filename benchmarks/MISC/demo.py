@@ -46,7 +46,16 @@ class MPI_Status(C.Structure):
                 ("MPI_TAG", C.c_int),
                 ("MPI_ERROR", C.c_int)]
 
+"""Load my library."""
 _c_pylib = C.CDLL("c_pylib.so")
+
+"""
+Some hackery for pure MPI functions that I cannot simply wrap since
+some parameters are not easy to obtain in Python's context.
+
+i.e. It is far convenient to use MPI_Datatype in the library
+rather than manually defining each MPI_datatype here.
+"""
 _c_pylib.matmul.argtypes = (C.POINTER(C.c_double), C.c_int, C.c_int, \
                             C.POINTER(C.c_double), C.c_int, C.c_int, \
                             C.POINTER(C.c_double), C.c_int, C.c_int)
@@ -98,16 +107,17 @@ def main():
 
     if (rank == 0):
         data = [float(i) for i in range(1, 10)]
-    elif (rank == 1):
+    elif (rank != 0):
         data = [float(0) for i in range(1, 10)]
-        print("Initial data at CHILD: ", data)
+        print("Initial data at rank {}: {}".format(rank, data))
         
 
     if (rank == 0):
-        mpi_send(data, 1, 1, MPI_COMM_WORLD)
-    elif (rank == 1):
+        for node in range(1, size):
+            mpi_send(data, node, 1, MPI_COMM_WORLD)
+    elif (rank != 0):
         data = mpi_recv(data, 0, 1, MPI_COMM_WORLD)
-        print("Received data at CHILD: ", data)
+        print("Received data at {}: {}".format(rank, data))
     
 
     mpi_finalize()
